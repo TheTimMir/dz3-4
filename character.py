@@ -33,3 +33,21 @@ class Berserk(Character):
         target.take_damage(damage)
         # print(f'{self.name} атаковал {target.name} и нанёс {damage} урона.')
 
+
+class Samurai(Character):
+    def __init__(self, name='', hp=30, damage=5, armor=0):
+        Character.__init__(self, name, hp, damage, armor)
+        self.math_multi = 0
+        self.multiplier = 0
+
+    def count_damage(self):
+        math_multi = 1 + self.multiplier / 10
+        if self.multiplier >= 5:
+            self.multiplier = 0
+        else:
+            self.multiplier += 1
+        return self.damage * math_multi
+
+    def attack(self, target):
+        damage = self.count_damage()
+        target.take_damage(damage)
